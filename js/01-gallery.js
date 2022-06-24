@@ -3,6 +3,16 @@ import { galleryItems } from './gallery-items.js';
 // variable for lightbox instance
 let lightboxImage;
 
+// config of lightbox instance
+const lightboxConfig = {
+  onShow: () => {
+    document.addEventListener("keydown", onKeyDownEscape);
+  },
+  onClose: () => {
+    document.removeEventListener("keydown", onKeyDownEscape);
+  }
+};
+
 // create markup gallery
 const galleryContainer = document.querySelector('.gallery');
 galleryContainer.insertAdjacentHTML('beforeend', createMarkupInnerGallery(galleryItems));
@@ -15,9 +25,8 @@ galleryContainer.addEventListener('click', function(e) {
   // create lightbox instance for target clickable element
   lightboxImage = createBigImage(e.target.dataset.source);
   // show lightbox instance and callback create keydown event listener
-  lightboxImage.show(createKeyDownEventListener);
+  lightboxImage.show();
 });
-
 
 // create markup for each gallery object and join them in one string
 function createMarkupInnerGallery(galleryItems) {
@@ -37,26 +46,19 @@ function createMarkupInnerGallery(galleryItems) {
   }).join("");
 }
 
-// create Lightbox library object
+// function create and return Lightbox instance
 function createBigImage(bigImgSource) {
-  const bigImg = basicLightbox.create(`<img class="modal-image" src="${bigImgSource}">`);
+  const bigImg = basicLightbox.create(
+    `<img class="modal-image" src="${bigImgSource}">`,
+    lightboxConfig
+  );
   return bigImg;
-}
-
-// create keydown event listener
-function createKeyDownEventListener() {
-  document.addEventListener("keydown", onKeyDownEscape);
-}
-
-// remove keydown event listener
-function removeKeyDownEventListener() {
-  document.removeEventListener("keydown", onKeyDownEscape);
 }
 
 // check lightbox instance and pressed Escape button
 // close lightbox instance and callback remove keydown event listener from this instance
 function onKeyDownEscape(e) {
   if(e.code === 'Escape' && lightboxImage.visible()){
-    lightboxImage.close(removeKeyDownEventListener);
+    lightboxImage.close();
   }
 }
