@@ -24,7 +24,7 @@ galleryContainer.addEventListener('click', function(e) {
   
   // create lightbox instance for target clickable element
   lightboxImage = createBigImage(e.target.dataset.source);
-  // show lightbox instance and callback create keydown event listener
+  // show lightbox instance
   lightboxImage.show();
 });
 
@@ -55,8 +55,7 @@ function createBigImage(bigImgSource) {
   return bigImg;
 }
 
-// check lightbox instance and pressed Escape button
-// close lightbox instance and callback remove keydown event listener from this instance
+// check lightbox instance and pressed Escape button and closing lightbox instance
 function onKeyDownEscape(e) {
   if(e.code === 'Escape' && lightboxImage.visible()){
     lightboxImage.close();
