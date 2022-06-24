@@ -1,22 +1,20 @@
 import { galleryItems } from './gallery-items.js';
 
+const lightboxConfig = {
+  captions: true,
+  captionType: 'attr',
+  captionsData: 'alt',
+  captionPosition: 'bottom',
+  captionDelay: 250,
+  showCounter: false,
+};
+
 // create markup gallery
 const galleryContainer = document.querySelector('.gallery');
 galleryContainer.insertAdjacentHTML('beforeend', createMarkupInnerGallery(galleryItems));
 
-
-galleryContainer.addEventListener("click", function(e) {
-  e.preventDefault();
-
-  // create instance of SimpleLihtBox and set options
-  const lightbox = new SimpleLightbox('.gallery__item', {
-    captions: true,
-    captionType: 'attr',
-    captionsData: 'alt',
-    captionPosition: 'bottom',
-    captionDelay: 250,
-  });
-});
+const lightbox = new SimpleLightbox('.gallery .gallery__item', lightboxConfig);
+lightbox.on('show.simplelightbox');
 
 
 // create markup for each gallery object and join them in one string
