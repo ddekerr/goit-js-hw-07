@@ -13,7 +13,8 @@ const lightboxConfig = {
 const galleryContainer = document.querySelector('.gallery');
 galleryContainer.insertAdjacentHTML('beforeend', createMarkupInnerGallery(galleryItems));
 
-const lightbox = new SimpleLightbox('.gallery .gallery__item', lightboxConfig);
+// create lightbox instance and show
+const lightbox = new SimpleLightbox('.gallery__item', lightboxConfig);
 lightbox.on('show.simplelightbox');
 
 
