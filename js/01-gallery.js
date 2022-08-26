@@ -3,16 +3,6 @@ import { galleryItems } from './gallery-items.js';
 // variable for lightbox instance
 let lightboxImage;
 
-// config of lightbox instance
-const lightboxConfig = {
-  onShow: () => {
-    document.addEventListener("keydown", onKeyDownEscape);
-  },
-  onClose: () => {
-    document.removeEventListener("keydown", onKeyDownEscape);
-  }
-};
-
 // create markup gallery
 const galleryContainer = document.querySelector('.gallery');
 galleryContainer.insertAdjacentHTML('beforeend', createMarkupInnerGallery(galleryItems));
@@ -48,10 +38,14 @@ function createMarkupInnerGallery(galleryItems) {
 
 // function create and return Lightbox instance
 function createBigImage(bigImgSource) {
-  const bigImg = basicLightbox.create(
-    `<img class="modal-image" src="${bigImgSource}">`,
-    lightboxConfig
-  );
+  // config of lightbox instance
+  const lightboxConfig = {
+    onShow: document.addEventListener("keydown", onKeyDownEscape),
+    onClose: document.removeEventListener("keydown", onKeyDownEscape)
+  };
+
+  const imageTag = `<img class="modal-image" src="${bigImgSource}">`;
+  const bigImg = basicLightbox.create(imageTag, lightboxConfig);
   return bigImg;
 }
 
